@@ -93,7 +93,7 @@ const AnimatedStack = props => {
       );
 
       const onSwipe = event.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-      onSwipe && runOnJS(onSwipe)(currentProfile);
+      onSwipe && runOnJS(onSwipe)(currentProfile); //onswipe function is in js thread
     },
   });
 
@@ -103,6 +103,7 @@ const AnimatedStack = props => {
   }, [currentIndex, translateX]);
 
   return (
+
     <View style={styles.root}>
       {nextProfile && (
         <View style={styles.nextCardContainer}>
@@ -156,9 +157,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     position: 'absolute',
+    elevation: 1,
     top: 10,
     zIndex: 1,
-    elevation: 1,
   },
 });
 
