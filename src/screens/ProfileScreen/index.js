@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, Aler
 import React, { useEffect, useState } from 'react'
 import { Picker } from '@react-native-picker/picker';
 import { Auth, DataStore } from 'aws-amplify';
-import { User } from '../../models';
+import { User, Users } from '../../models';
 
 
 const ProfileScreen = () => {
@@ -65,8 +65,9 @@ const ProfileScreen = () => {
           //  console.log(JSON.stringify(userInfo));
             setUser(userInfo);
 
+
             const dbUsers = await DataStore.query(
-                User,
+                Users,
                 u => u.id === userInfo.getUsername(),
             );
             console.log(JSON.stringify(dbUsers, null, 2));

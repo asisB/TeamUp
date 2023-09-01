@@ -1,72 +1,108 @@
-import * as React from 'react';
-import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions } from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
-const {width, height} = Dimensions.get('screen');
+import React, { useState } from "react";
+import { View, Text, Image, StatusBar } from "react-native";
+import AppIntroSlider from "react-native-app-intro-slider";
+//import { COLORS, SIZES } from './src/constants/theme';
+//import Router from './src/router/router';
 
-// https://www.flaticon.com/packs/retro-wave
-// inspiration: https://dribbble.com/shots/11164698-Onboarding-screens-animation
-// https://twitter.com/mironcatalin/status/1321180191935373312
+const slides = [
+    {
+      id: 1,
+      title: 'Discover Best Places',
+      description: '“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"',
+      image: require('../../../assets/images/onboarding1.jpg')
+    },
+    {
+      id: 2,
+      title: 'Choose A Tasty Dish',
+      description: '“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"',
+      image: require('../../../assets/images/onboarding2.jpg')
+    },
+    {
+      id: 3,
+      title: 'Pick Up The Delivery',
+      description: '“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"',
+      image: require('../../../assets/images/onboarding3.jpg')
+    }
+  ]
 
-const bgs = ['#A5BBFF', '#DDBEFE', '#FF63ED', '#B98EFF'];
-const DATA = [
-  {
-    "key": "3571572",
-    "title": "Multi-lateral intermediate moratorium",
-    "description": "I'll back up the multi-byte XSS matrix, that should feed the SCSI application!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571572.png"
-  },
-  {
-    "key": "3571747",
-    "title": "Automated radical data-warehouse",
-    "description": "Use the optical SAS system, then you can navigate the auxiliary alarm!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571747.png"
-  },
-  {
-    "key": "3571680",
-    "title": "Inverse attitude-oriented system engine",
-    "description": "The ADP array is down, compress the online sensor so we can input the HTTP panel!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571680.png"
-  },
-  {
-    "key": "3571603",
-    "title": "Monitored global data-warehouse",
-    "description": "We need to program the open-source IB interface!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571603.png"
-  }
-]
 
-const OnboardingScreen = () =>  {
-  return (
-    <View style={styles.container}>
-      <StatusBar hidden />
-      {/* <Animated.FlatList data={DATA}
-      keyExtractor={item => item.key}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      renderItem={({item}) => {
-          return <view style={{width, justifyContent: 'center', alignItems: 'center'}}>
-              <Image 
-              source={{uri: item.image}} 
-              style={{
-                  width: width /2, 
-                  height: width /2, 
-                  resizeMode: 'contain', }}/>
-          </view>
-      }}
+const OnboardingScreen = () => {
+    const [showHomePage, setShowHomePage] = useState(true);
 
-      /> */}
+    StatusBar.setBarStyle('light-content', true);
+    StatusBar.setBackgroundColor(COLORS.primary);
 
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const buttonLabel = (label) => {
+        return(
+          <View style={{
+            padding: 12
+          }}>
+            <Text style={{
+              color: COLORS.title,
+              fontWeight: '600',
+              fontSize: SIZES.h4,
+            }}>
+              {label}
+            </Text>
+          </View>
+        )
+      }
+    
+      if(!showHomePage) {
+        return(
+          <AppIntroSlider
+            data={slides}
+            renderItem={({item}) => {
+              return(
+                <View style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  padding: 15,
+                  paddingTop: 100,
+                }}>
+                  <Image
+                    source={item.image}
+                    style={{
+                      width: SIZES.width - 80,
+                      height: 400,
+                    }}
+                    resizeMode="contain"
+                  />
+                  <Text style={{
+                    fontWeight: 'bold',
+                    color: COLORS.title,
+                    fontSize: SIZES.h1,
+                  }}>
+                    {item.title}
+                  </Text>
+                  <Text style={{
+                    textAlign: 'center',
+                    paddingTop: 5,
+                    color: COLORS.title
+                  }}>
+                    {item.description}
+                  </Text>
+                </View>
+              )
+            }}
+            activeDotStyle={{
+              backgroundColor: COLORS.primary,
+              width: 30,
+            }}
+            showSkipButton
+            renderNextButton={() => buttonLabel("Next")}
+            renderSkipButton={() => buttonLabel("Skip")}
+            renderDoneButton={() => buttonLabel("Done")}
+            onDone={() => {
+              setShowHomePage(true);
+            }}
+          />
+        )
+      }
+    
+    //   return(
+    //     <Router />
+    //   )
+    }
 
 export default OnboardingScreen;

@@ -11,6 +11,7 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 import { Amplify } from 'aws-amplify';
 import awsExports from './src/aws-exports';
 import ProfileScreen from "./src/screens/ProfileScreen";
+import { NavigationContainer } from '@react-navigation/native';
 
 Amplify.configure(awsExports);
 
@@ -22,6 +23,7 @@ const [activeScreen, setActiveScreen] = useState('HOME')
   const color = '#b5b5b5';
   const activeColor = '#FCBF49'
   return (
+    <NavigationContainer>
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
         <View style={styles.topNavigation}>
@@ -45,6 +47,7 @@ const [activeScreen, setActiveScreen] = useState('HOME')
        { activeScreen === 'PROFILE' && <ProfileScreen />}
       </View>
     </SafeAreaView>
+    </NavigationContainer>
   );
 };
 

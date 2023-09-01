@@ -1,15 +1,28 @@
 {
-  "staging": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-teamup-staging-133256-authRole",
-      "UnauthRoleArn": "arn:aws:iam::895386346149:role/amplify-teamup-staging-133256-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::895386346149:role/amplify-teamup-staging-133256-authRole",
+      "AuthRoleName": "amplify-teamup-dev-145757-authRole",
+      "UnauthRoleArn": "arn:aws:iam::895386346149:role/amplify-teamup-dev-145757-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::895386346149:role/amplify-teamup-dev-145757-authRole",
       "Region": "eu-west-2",
-      "DeploymentBucketName": "amplify-teamup-staging-133256-deployment",
-      "UnauthRoleName": "amplify-teamup-staging-133256-unauthRole",
-      "StackName": "amplify-teamup-staging-133256",
-      "StackId": "arn:aws:cloudformation:eu-west-2:895386346149:stack/amplify-teamup-staging-133256/3b931ef0-44de-11ee-b42d-066ca38273b8",
-      "AmplifyAppId": "d1fpkki8z8obcg"
+      "DeploymentBucketName": "amplify-teamup-dev-145757-deployment",
+      "UnauthRoleName": "amplify-teamup-dev-145757-unauthRole",
+      "StackName": "amplify-teamup-dev-145757",
+      "StackId": "arn:aws:cloudformation:eu-west-2:895386346149:stack/amplify-teamup-dev-145757/85bf6900-476f-11ee-962b-060b9752d63c",
+      "AmplifyAppId": "da3zzv9y4q39o",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-teamup-dev-145757-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "teamup038a2a3d038a2a3d": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "teamup038a2a3d038a2a3dPostConfirmation": {
+          "deploymentBucketName": "amplify-teamup-dev-145757-deployment",
+          "s3Key": "amplify-builds/teamup038a2a3d038a2a3dPostConfirmation-57463974795763467167-build.zip"
+        }
+      }
     }
   }
 }
