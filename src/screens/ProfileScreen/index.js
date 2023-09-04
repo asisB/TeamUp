@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, Aler
 import React, { useEffect, useState } from 'react'
 import { Picker } from '@react-native-picker/picker';
 import { Auth, DataStore } from 'aws-amplify';
-import { User, Users } from '../../models';
 
 
 const ProfileScreen = () => {

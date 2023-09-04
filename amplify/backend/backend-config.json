@@ -1,55 +1,25 @@
 {
-  "api": {
-    "teamup": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "teamup038a2a3d038a2a3d"
-        }
-      ],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [],
-          "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authteamup038a2a3d038a2a3d"
-            }
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "auth": {
-    "teamup038a2a3d038a2a3d": {
+    "TeamUp": {
       "customAuth": false,
-      "dependsOn": [
-        {
-          "attributes": [
-            "Arn",
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "teamup038a2a3d038a2a3dPostConfirmation",
-          "triggerProvider": "Cognito"
-        }
-      ],
+      "dependsOn": [],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS",
+            "REQUIRES_SYMBOLS",
+            "REQUIRES_UPPERCASE"
+          ],
+          "passwordPolicyMinLength": 6
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "NAME"
         ],
         "socialProviders": [],
         "usernameAttributes": [],
@@ -59,47 +29,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    },
-    "userPoolGroups": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID",
-            "IdentityPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "teamup038a2a3d038a2a3d"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito-UserPool-Groups"
-    }
-  },
-  "function": {
-    "teamup038a2a3d038a2a3dPostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_teamup038a2a3d038a2a3dPostConfirmation_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "teamup038a2a3d038a2a3dPostConfirmation"
-        }
-      ]
-    },
-    "AMPLIFY_function_teamup038a2a3d038a2a3dPostConfirmation_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "teamup038a2a3d038a2a3dPostConfirmation"
-        }
-      ]
     }
   }
 }
