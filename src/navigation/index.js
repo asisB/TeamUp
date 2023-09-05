@@ -7,19 +7,21 @@ import ForgotPasswordScreen from '../screens/AuthenticationScreen/ForgotPassword
 import ConfirmEmailScreen from '../screens/AuthenticationScreen/ConfirmEmailScreen';
 import NewPasswordScreen from '../screens/AuthenticationScreen/NewPasswordScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
+import MatchesScreen from '../screens/MachesScreen';
 import HomeScreen from '../screens/Home';
-import { Auth } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
+import { ActivityIndicator, View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(null);
 
   const checkUser = async () => {
     try {
-      const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
+      const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
       setUser(authUser);
-    } catch (error) {
+    } catch (e) {
       setUser(null);
     }
   };
@@ -28,11 +30,30 @@ const Navigation = () => {
     checkUser();
   }, []);
 
+  useEffect(() => {
+    const listener = data => {
+      console.log('Auth event:', data.payload.event);
+      if (data.payload.event === 'signIn' || data.payload.event === 'signOut') {
+        checkUser();
+      }
+    };
+    Hub.listen('auth', listener);
+    return () => Hub.remove('auth', listener);
+  }, []);
+
+  if (user === null) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
         ) : (
           <>
             <Stack.Screen name="SignIn" component={SignInScreen} />
@@ -42,7 +63,6 @@ const Navigation = () => {
             <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
           </>
         )}
-        <Stack.Screen name="OnBoarding" component={OnboardingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

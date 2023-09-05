@@ -1,18 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 import 'react-native-gesture-handler';
-import { View, StyleSheet, SafeAreaView, Pressable } from "react-native";
-import HomeScreen from "../../screens/Home";
-import MachesScreen from "../../screens/MachesScreen";
+import { View, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import { Amplify } from 'aws-amplify';
-import awsExports from '../../aws-exports';
-import ProfileScreen from "../../screens/ProfileScreen";
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-
-Amplify.configure(awsExports);
+import ProfileScreen from '../../screens/ProfileScreen';
 
 const NavigationBar = () => {
 const [activeScreen, setActiveScreen] = useState('HOME')
@@ -24,8 +16,12 @@ const [activeScreen, setActiveScreen] = useState('HOME')
       <View style={styles.container}>
         <View style={styles.topNavigation}>
           <Pressable onPress={() => setActiveScreen('HOME')}>
-            <Fontisto name="home" size={30} color={activeScreen === 'HOME' ? activeColor : color} />
+            <Fontisto 
+            name="home" 
+            size={30} 
+            color={activeScreen === 'HOME' ? activeColor : color} />
           </Pressable>
+
           <Pressable onPress={() => setActiveScreen('FAVORITE')}>
             <Fontisto name='favorite' size={30} color={activeScreen === 'FAVORITE' ? activeColor : color} />
           </Pressable>

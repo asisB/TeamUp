@@ -1,61 +1,40 @@
-import React from "react";
-import 'react-native-gesture-handler';
-import { View, StyleSheet } from "react-native";
-import Card from "../../../src/components/Card";
-import user from "../../../assets/data/user";
-import AnimatedStack from "../../components/AnimatedStack";
-import NavigationBar from "../../components/NavigationBar";
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import Card from '../../components/Card';
+import users from '../../../assets/data/user';
 
+import AnimatedStack from '../../components/AnimatedStack';
+import NavigationBar from '../../components/NavigationBar';
 
 const HomeScreen = () => {
+  const onSwipeLeft = user => {
+    console.warn('swipe left', user.name);
+  };
 
-  const onSwipeLeft = () => {
-    console.warn('swipe left: ', user.name);
-  }
-
-  const onSwipeRight = () => {
-    console.warn('swipe left: ', user.name);
-  }
-
+  const onSwipeRight = user => {
+    console.warn('swipe right: ', user.name);
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.pageContainer}>
       <AnimatedStack
-        data={user}
+        data={users}
         renderItem={({ item }) => <Card user={item} />}
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
       />
-      <NavigationBar />
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#ededed'
-  },
-  icons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    padding: 10,
-
-  },
-  buttons: {
-    width: 50,
-    height: 50,
+  pageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 50,
-  }
+    flex: 1,
+    width: '100%',
+  },
 });
+
 
 export default HomeScreen;

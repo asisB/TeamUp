@@ -11,8 +11,9 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import Request from '../../../assets/images/request.png';
+import Like from '../../../assets/images/request.png';
 import Nope from '../../../assets/images/nope.png';
+import NavigationBar from '../NavigationBar';
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
@@ -93,7 +94,7 @@ const AnimatedStack = props => {
       );
 
       const onSwipe = event.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-      onSwipe && runOnJS(onSwipe)(currentProfile); //onswipe function is in js thread
+      onSwipe && runOnJS(onSwipe)(currentProfile);
     },
   });
 
@@ -103,7 +104,6 @@ const AnimatedStack = props => {
   }, [currentIndex, translateX]);
 
   return (
-
     <View style={styles.root}>
       {nextProfile && (
         <View style={styles.nextCardContainer}>
@@ -117,7 +117,7 @@ const AnimatedStack = props => {
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
             <Animated.Image
-              source={Request}
+              source={Like}
               style={[styles.like, {left: 10}, likeStyle]}
               resizeMode="contain"
             />
@@ -157,9 +157,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     position: 'absolute',
-    elevation: 1,
     top: 10,
     zIndex: 1,
+    elevation: 1,
   },
 });
 
