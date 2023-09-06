@@ -11,6 +11,7 @@ import MatchesScreen from '../screens/MachesScreen';
 import HomeScreen from '../screens/Home';
 import { Auth, Hub } from 'aws-amplify';
 import { ActivityIndicator, View } from 'react-native';
+import NavigationBar from '../components/NavigationBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,7 +54,7 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="TabBar" component={NavigationBar} />
         ) : (
           <>
             <Stack.Screen name="SignIn" component={SignInScreen} />

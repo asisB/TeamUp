@@ -2,9 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import Card from '../../components/Card';
 import users from '../../../assets/data/user';
-
 import AnimatedStack from '../../components/AnimatedStack';
-import NavigationBar from '../../components/NavigationBar';
 
 const HomeScreen = () => {
   const onSwipeLeft = user => {
