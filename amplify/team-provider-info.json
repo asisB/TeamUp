@@ -10,6 +10,11 @@
       "StackName": "amplify-teamup-staging-83935",
       "StackId": "arn:aws:cloudformation:eu-west-2:895386346149:stack/amplify-teamup-staging-83935/3efeddd0-496c-11ee-9912-060421d2d512",
       "AmplifyAppId": "dq8kmi03kv4q8"
+    },
+    "categories": {
+      "auth": {
+        "TeamUp": {}
+      }
     }
   }
 }

@@ -1,0 +1,37 @@
+type Teamup @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  User: User @hasOne
+  User1: User @hasOne
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum Sports {
+  BASKETBALL
+  VOLLEYBALL
+  FOOTBALL
+  CRICKET
+  TABLETENNIS
+  GYM
+  BOXING
+  RUNNING
+  BADMINTON
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  image: String
+  bio: String!
+  gender: Gender
+  skills: String!
+  language: String
+  sports: Sports!
+  age: String
+  location: String!
+}
+ 

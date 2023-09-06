@@ -13,7 +13,6 @@ const NavigationBar = () => {
 
   const color = '#b5b5b5';
   const activeColor = '#FCBF49';
-
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
@@ -23,8 +22,7 @@ const NavigationBar = () => {
           {activeScreen === 'CHAT' && <MatchesScreen />}
           {activeScreen === 'PROFILE' && <ProfileScreen />}
         </View>
-
-        {/* Navigation Icons */}
+        
         <View style={styles.bottomNavigation}>
           <Pressable onPress={() => setActiveScreen('HOME')}>
             <Fontisto 
