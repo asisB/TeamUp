@@ -44,7 +44,9 @@
           "EMAIL",
           "NAME"
         ],
-        "socialProviders": [],
+        "socialProviders": [
+          "FACEBOOK"
+        ],
         "usernameAttributes": [],
         "verificationMechanisms": [
           "EMAIL"

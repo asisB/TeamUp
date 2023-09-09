@@ -61,6 +61,12 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "hostedUI": false
+    "hostedUI": true,
+    "hostedUIDomainName": "pg8rhbydhu3h",
+    "authProvidersUserPool": [
+      "Facebook"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"username\":\"id\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://localhost//3000\"],\"LogoutURLs\":[\"https://localhost//3000\"]}"
   }
 }

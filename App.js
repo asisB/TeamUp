@@ -7,6 +7,7 @@ import { Amplify, Auth } from 'aws-amplify';
 import awsExports from './src/aws-exports';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Navigation from "./src/navigation";
+import TabOneScreen from "./src/screens/Chat/TabOneScreen";
 
 
 Amplify.configure(awsExports);
@@ -17,7 +18,7 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.root}>
-      <Navigation />
+      <TabOneScreen />
     </SafeAreaView>
     </GestureHandlerRootView>
   );
