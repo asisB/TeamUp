@@ -1,26 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import 'react-native-gesture-handler';
-import { View, StyleSheet, SafeAreaView, Pressable } from "react-native";
+import { View, StyleSheet, SafeAreaView, Pressable, ActivityIndicator } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { Amplify, Auth } from 'aws-amplify';
 import awsExports from './src/aws-exports';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Navigation from "./src/navigation";
-import TabOneScreen from "./src/screens/Chat/TabOneScreen";
-
+import Chats from "./src/screens/Chat/Chat";
+import Navigation from "./src/navigation/MainNavigation";
+import MainNavigation from "./src/navigation/MainNavigation";
+import AuthNavigation from "./src/navigation/AuthNavigation";
+import {Hub } from 'aws-amplify';
 
 Amplify.configure(awsExports);
 const Stack = createStackNavigator();
 
+
 const App = () => {
- // Auth.signOut()
+  const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+
+  const checkUser = async () => {
+    setLoading(true)
+    try {
+      const authUser = await Auth.currentAuthenticatedUser({bypassCache: true});
+      setUser(authUser);
+    } catch (e) {
+      setUser(null);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  useEffect(() => {
+    const listener = data => {
+      console.log('Auth event:', data.payload.event);
+      if (data.payload.event === 'signIn' || data.payload.event === 'signOut') {
+        checkUser();
+      }
+    };
+    Hub.listen('auth', listener);
+    return () => Hub.remove('auth', listener);
+  }, []);
+
+  // Auth.signOut()
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={styles.root}>
-      <TabOneScreen />
-    </SafeAreaView>
-    </GestureHandlerRootView>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+          <View style={styles.root}>
+            {!isLoading && user && <MainNavigation/> }
+            {!isLoading && !user && <AuthNavigation/> }
+            {isLoading && <ActivityIndicator/> }
+          </View>
+      </GestureHandlerRootView>
   );
 };
 
