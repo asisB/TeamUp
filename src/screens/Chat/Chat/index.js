@@ -6,7 +6,7 @@ import chatRoomData from '../../../../assets/data/ChatRoom';
 const Chats = () => {
     return (
         <View style={styles.page}>
-            <FlatList data={chatRoomData} renderItem={({item}) => <ChatRoomItem chatRoom={item}/> } 
+            <FlatList data={chatRoomData} renderItem={({ item }) => <ChatRoomItem chatRoom={item} /> } 
             showsVerticalScrollIndicator={false}/>
         </View>
     )

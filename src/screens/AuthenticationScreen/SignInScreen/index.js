@@ -8,7 +8,6 @@ import SocialSignInButton from '../../../components/SocialSignInButton'
 import { useNavigation } from '@react-navigation/native'
 import { TextInput } from 'react-native-gesture-handler'
 import { useForm, Controller } from 'react-hook-form';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Auth } from 'aws-amplify'
 
 const SignInScreen = () => {

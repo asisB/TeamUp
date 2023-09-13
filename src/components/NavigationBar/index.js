@@ -7,6 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ProfileScreen from '../../screens/ProfileScreen';
 import HomeScreen from '../../screens/Home';
 import MatchesScreen from '../../screens/MachesScreen';
+import ChatRoomScreen from '../../screens/Chat/ChatRoomScreen';
+import Chats from '../../screens/Chat/Chat';
 
 const NavigationBar = () => {
   const [activeScreen, setActiveScreen] = useState('HOME')
@@ -19,8 +21,9 @@ const NavigationBar = () => {
         {/* Screens */}
         <View style={styles.screenContainer}>
           {activeScreen === 'HOME' && <HomeScreen />}
-          {activeScreen === 'CHAT' && <MatchesScreen />}
+          {activeScreen === 'CHAT' && <Chats />}
           {activeScreen === 'PROFILE' && <ProfileScreen />}
+          {activeScreen === 'FAVORITE' && <MatchesScreen/>}
         </View>
         
         <View style={styles.bottomNavigation}>

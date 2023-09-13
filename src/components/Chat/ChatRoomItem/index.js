@@ -5,18 +5,25 @@ import { useNavigation } from '@react-navigation/native'
 
 const ChatRoomItem = ({ chatRoom }) => {
     const user = chatRoom?.users?.[1];
+    if (!user) {
+        return null;
+    }
 
     const navigation = useNavigation();
 
     const onPress = () => {
-        navigation.navigate('ChatRoom');
+        console.warn('pressed on ', user.name)
+        navigation.navigate('ChatRoom', { id: chatRoom.id });
     }
+
     return (
             <Pressable onPress={onPress} style={styles.container}>
                 <Image source={{ uri: user.imageUri }} style={styles.image} />
+
               {chatRoom.newMessages && <View style={styles.badgeContainer}>
                     <Text style={styles.badgeText}>{chatRoom.newMessages}</Text>
                 </View> }
+
                 <View style={styles.rightContainer}>
                     <View style={styles.row}>
                         <Text style={styles.name}>{user.name}</Text>
