@@ -20,8 +20,7 @@ const ConfirmEmailScreen = () => {
     const onConfirmPressed = async (data) => {
         try {
             const response = await Auth.confirmSignUp(data.username, data.code);
-            console.log(response);
-            navigation.navigate('SignIn');
+           await save();
         } catch (e) {
             Alert.alert("Oops", e.message);
         }
@@ -31,6 +30,28 @@ const ConfirmEmailScreen = () => {
         console.warn('SignIn');
         navigation.navigate('SignIn')
     }
+
+    const save = async () => {
+
+        const authUser = await Auth.currentAuthenticatedUser();
+        console.log(JSON.stringify(authUser, null, 2));
+        const newUser = {
+            id: authUser.sub,
+            email: email,
+
+        };
+
+        console.log(newUser);
+        try {
+            const createUserResponse = await APIService.createUser(newUser);
+            console.log(JSON.stringify(createUserResponse, null, 2));
+            navigation.navigate('SignIn');
+            console.log('User data saved successfully');
+            console.log('User created:', createUserResponse);
+        } catch (error) {
+            console.error('Error saving user data:', error);
+        }
+    };
 
     const onResendPressed = async () => {
         try {

@@ -14,7 +14,7 @@ const APIService = {
       const _getMeData = profile.data?.getProfile;
       return _getMeData;
     } catch (error) {
-      consoleIt("Error getMe()", error);
+      console.log("Error getMe()", error);
     }
   },
   createUser: async (input) => {
@@ -24,7 +24,7 @@ const APIService = {
       );
       return updateRes.data;
     } catch (error) {
-      consoleIt("Error createUser()", error);
+      console.log("Error createUser()", error);
     }
   },
 };

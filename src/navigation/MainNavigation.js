@@ -6,8 +6,10 @@ import NavigationBar from '../components/NavigationBar';
 import Chats from '../screens/Chat/Chat';
 import NotFoundScreen from '../screens/Chat/NotFoundScreen';
 import ChatRoomScreen from '../screens/Chat/ChatRoomScreen';
-import styles from '../components/Chat/ChatRoomItem/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProfileScreen from '../screens/ProfileScreen';
+import HelpScreen from '../screens/SupportScreen/HelpScreen';
+import TermsScreen from '../screens/SupportScreen/TermsScreen';
+import CardDetail from '../components/CardDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,31 +18,26 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="TabBar" component={NavigationBar} options={{ headerTitle: ChatsHeader}} />
-        <Stack.Screen name="Chats" component={Chats} options={{ headerTitle: ChatsHeader }} />
+        <Stack.Screen name="Back" component={NavigationBar} options={{ headerTitle: Header}} />
+        <Stack.Screen name="Chats" component={Chats} options={{ headerTitle: Header }} />
         <Stack.Screen name="ChatRoom" component={ChatRoomScreen} options={{
-          headerTitle: "ChatHeader",
+          headerTitle: "Message",
           headerBackTitleVisible: false,
         }} />
+        <Stack.Screen name='ProfileScreen' component={ProfileScreen}/>
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ headerTitle: 'Not Found' }} />
+        <Stack.Screen name="HelpCenter" component={HelpScreen} options={{ headerTitle: 'Help Center' }} />
+        <Stack.Screen name="Terms" component={TermsScreen} options={{ headerTitle: 'Terms of Services' }} />
+        <Stack.Screen name="CardDetail" component={CardDetail} options={{ headerShown: false }}  />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-const ChatsHeader = (props) => {
-  const { width } = useWindowDimensions();
-
+const Header = (props) => {
   return (
-    <View style={{
-      flexDirection: 'row',
-      alignItems: 'center',
-    }}>
-      <Text style={{ flex: 1, textAlign: 'center',  fontWeight: 'bold', marginLeft: 30 }}>Signal</Text>
-      <Image
-        source={{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg' }}
-        style={{ width: 30, height: 30, borderRadius: 30, marginRight: 30}}
-      />
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{ fontSize: 20, color: '#D62828',  fontWeight: 'bold'}}>TeamUp</Text>
     </View>
 
   )

@@ -10,9 +10,11 @@ import Navigation from "./src/navigation/MainNavigation";
 import MainNavigation from "./src/navigation/MainNavigation";
 import AuthNavigation from "./src/navigation/AuthNavigation";
 import {Hub } from 'aws-amplify';
+import {enableLatestRenderer} from 'react-native-maps';
 
 Amplify.configure(awsExports);
 const Stack = createStackNavigator();
+enableLatestRenderer();
 
 
 const App = () => {

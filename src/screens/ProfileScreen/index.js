@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Auth, DataStore } from 'aws-amplify';
 import APIService from '../../apiservices/apiService';
 import { FlatList } from 'react-native-gesture-handler';
+import { Gender } from '../../models';
 
 
 const ProfileScreen = () => {
@@ -32,16 +33,16 @@ const ProfileScreen = () => {
         const authUser = await Auth.currentAuthenticatedUser();
 
         const newUser = {
-            sub: authUser.attributes.sub,
-            email,
-            name,
-            bio,
-            gender,
-            age,
-            sports,
-            location,
-            language,
-            skillLevel,
+            id: id,
+            email: email,
+            name: name,
+            bio: bio,
+            gender: gender,
+            age: age ,
+            sports: sports,
+            location: location,
+            language: language,
+            skills: skills,
             image:
                 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
         };
@@ -49,7 +50,6 @@ const ProfileScreen = () => {
         try {
             const createUserResponse = await APIService.createUser(newUser);
             console.log('User data saved successfully');
-
             console.log('User created:', createUserResponse);
         } catch (error) {
             console.error('Error saving user data:', error);
@@ -70,15 +70,13 @@ const ProfileScreen = () => {
         );
     };
 
-
     useEffect(() => {
         const getCurrentUser = async () => {
             try {
                 const userInfo = await Auth.currentAuthenticatedUser();
-
-                setSub(userInfo.attributes.sub);
-
-                const userDetail = await APIService.getUser(setSub); // Changed to getUser
+                console.log(userInfo.sub);
+                const userDetail = await APIService.getUser(userInfo.sub); // Changed to getUser
+                console.log(JSON.stringify(userDetail, null, 2));
                 setName(userDetail.name);
                 setBio(userDetail.bio);
                 setAge(userDetail.age);
@@ -86,7 +84,7 @@ const ProfileScreen = () => {
                 setEmail(userDetail.email);
                 setLanguage(userDetail.language);
                 setLocation(userDetail.location);
-                setSkillLevel(userDetail.skillLevel);
+                setSkillLevel(userDetail.skills);
                 setSports(userDetail.sports);
 
             } catch (error) {
@@ -194,10 +192,6 @@ const ProfileScreen = () => {
 
                     <Pressable onPress={save} style={styles.button}>
                         <Text style={styles.buttonText}>Save</Text>
-                    </Pressable>
-
-                    <Pressable onPress={() => Auth.signOut()} style={styles.button}>
-                        <Text style={styles.buttonText}>Sign out</Text>
                     </Pressable>
                 </View>
             </ScrollView>

@@ -9,6 +9,7 @@ import HomeScreen from '../../screens/Home';
 import MatchesScreen from '../../screens/MachesScreen';
 import ChatRoomScreen from '../../screens/Chat/ChatRoomScreen';
 import Chats from '../../screens/Chat/Chat';
+import Profile from '../../screens/Profile';
 
 const NavigationBar = () => {
   const [activeScreen, setActiveScreen] = useState('HOME')
@@ -22,7 +23,7 @@ const NavigationBar = () => {
         <View style={styles.screenContainer}>
           {activeScreen === 'HOME' && <HomeScreen />}
           {activeScreen === 'CHAT' && <Chats />}
-          {activeScreen === 'PROFILE' && <ProfileScreen />}
+          {activeScreen === 'PROFILE' && <Profile />}
           {activeScreen === 'FAVORITE' && <MatchesScreen/>}
         </View>
         
