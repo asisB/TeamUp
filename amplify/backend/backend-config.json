@@ -1,18 +1,28 @@
 {
   "api": {
-    "TeamUp": {
-      "dependsOn": [],
+    "teamup": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "teamupd00d1cb5"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AWS_IAM"
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authteamupd00d1cb5"
+              }
             }
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
+              "apiKeyExpirationDays": 7
             },
             "authenticationType": "API_KEY"
           }
@@ -23,7 +33,7 @@
     }
   },
   "auth": {
-    "TeamUp": {
+    "teamupd00d1cb5": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -32,21 +42,13 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ],
-          "passwordPolicyMinLength": 6
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
-          "NAME"
+          "EMAIL"
         ],
-        "socialProviders": [
-          "FACEBOOK"
-        ],
+        "socialProviders": [],
         "usernameAttributes": [],
         "verificationMechanisms": [
           "EMAIL"
@@ -54,6 +56,13 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "storage": {
+    "s3d4f4a860": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

@@ -1,5 +1,11 @@
 {
-  "AppSyncApiName": "TeamUp",
+  "AppSyncApiName": "teamup",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authteamupd00d1cb5",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

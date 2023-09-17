@@ -1,5 +1,12 @@
 import React from 'react';
-import {Text, ImageBackground, View, StyleSheet, Dimensions} from 'react-native';
+import {
+  Text,
+  ImageBackground,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 
 const Card = props => {
   const {name, image, bio} = props.user;
@@ -23,7 +30,7 @@ const deviceWidth = Math.round(Dimensions.get('window').width);
 
 const styles = StyleSheet.create({
   card: {
-    width:  deviceWidth - 32,
+    width: deviceWidth - 32,
     height: 370,
     borderRadius: 10,
     backgroundColor: '#fefefe',
@@ -33,11 +40,11 @@ const styles = StyleSheet.create({
       width: 0,
       height: 5,
     },
-    shadowOpacity: 0.30,
+    shadowOpacity: 0.3,
     shadowRadius: 5,
 
     elevation: 11,
-    flex: 1
+    flex: 1,
   },
   image: {
     width: '100%',

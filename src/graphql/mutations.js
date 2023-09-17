@@ -1,72 +1,62 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage(
-    $input: CreateMessageInput!
-    $condition: ModelMessageConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createMessage(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
+      username
+      email
+      name
+      image
+      bio
+      gender
+      skill
+      language
+      sport
+      age
+      location
+      connections {
+        nextToken
+        __typename
+      }
+      chats {
+        nextToken
+        __typename
+      }
       createdAt
-      content
-      senderID
-      receiverID
-      sender {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      receiver {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
       updatedAt
       __typename
     }
   }
 `;
-export const updateMessage = /* GraphQL */ `
-  mutation UpdateMessage(
-    $input: UpdateMessageInput!
-    $condition: ModelMessageConditionInput
+export const deleteConnection = /* GraphQL */ `
+  mutation DeleteConnection(
+    $input: DeleteConnectionInput!
+    $condition: ModelConnectionConditionInput
   ) {
-    updateMessage(input: $input, condition: $condition) {
+    deleteConnection(input: $input, condition: $condition) {
       id
-      createdAt
-      content
+      status
+      userID
       senderID
       receiverID
+      chatID
+      lastMessageID
       sender {
         id
+        username
+        email
         name
         image
         bio
         gender
-        skills
+        skill
         language
-        sports
+        sport
         age
         location
         createdAt
@@ -75,19 +65,74 @@ export const updateMessage = /* GraphQL */ `
       }
       receiver {
         id
+        username
+        email
         name
         image
         bio
         gender
-        skills
+        skill
         language
-        sports
+        sport
         age
         location
         createdAt
         updatedAt
         __typename
       }
+      lastMessage {
+        id
+        chatID
+        content
+        senderID
+        seen
+        createdAt
+        connectionID
+        updatedAt
+        __typename
+      }
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      connectionChatId
+      __typename
+    }
+  }
+`;
+export const deleteChat = /* GraphQL */ `
+  mutation DeleteChat(
+    $input: DeleteChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    deleteChat(input: $input, condition: $condition) {
+      id
+      connectionID
+      userIdD
+      connection {
+        id
+        status
+        userID
+        senderID
+        receiverID
+        chatID
+        lastMessageID
+        createdAt
+        updatedAt
+        connectionChatId
+        __typename
+      }
+      messages {
+        nextToken
+        __typename
+      }
+      createdAt
       updatedAt
       __typename
     }
@@ -100,266 +145,21 @@ export const deleteMessage = /* GraphQL */ `
   ) {
     deleteMessage(input: $input, condition: $condition) {
       id
-      createdAt
+      chatID
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       senderID
-      receiverID
-      sender {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      receiver {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createPartner = /* GraphQL */ `
-  mutation CreatePartner(
-    $input: CreatePartnerInput!
-    $condition: ModelPartnerConditionInput
-  ) {
-    createPartner(input: $input, condition: $condition) {
-      id
-      status
-      userID
-      user {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
+      seen
       createdAt
+      connectionID
       updatedAt
-      __typename
-    }
-  }
-`;
-export const updatePartner = /* GraphQL */ `
-  mutation UpdatePartner(
-    $input: UpdatePartnerInput!
-    $condition: ModelPartnerConditionInput
-  ) {
-    updatePartner(input: $input, condition: $condition) {
-      id
-      status
-      userID
-      user {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deletePartner = /* GraphQL */ `
-  mutation DeletePartner(
-    $input: DeletePartnerInput!
-    $condition: ModelPartnerConditionInput
-  ) {
-    deletePartner(input: $input, condition: $condition) {
-      id
-      status
-      userID
-      user {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const createTeamup = /* GraphQL */ `
-  mutation CreateTeamup(
-    $input: CreateTeamupInput!
-    $condition: ModelTeamupConditionInput
-  ) {
-    createTeamup(input: $input, condition: $condition) {
-      id
-      User {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      User1 {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      teamupUserId
-      teamupUser1Id
-      __typename
-    }
-  }
-`;
-export const updateTeamup = /* GraphQL */ `
-  mutation UpdateTeamup(
-    $input: UpdateTeamupInput!
-    $condition: ModelTeamupConditionInput
-  ) {
-    updateTeamup(input: $input, condition: $condition) {
-      id
-      User {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      User1 {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      teamupUserId
-      teamupUser1Id
-      __typename
-    }
-  }
-`;
-export const deleteTeamup = /* GraphQL */ `
-  mutation DeleteTeamup(
-    $input: DeleteTeamupInput!
-    $condition: ModelTeamupConditionInput
-  ) {
-    deleteTeamup(input: $input, condition: $condition) {
-      id
-      User {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      User1 {
-        id
-        name
-        image
-        bio
-        gender
-        skills
-        language
-        sports
-        age
-        location
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      teamupUserId
-      teamupUser1Id
       __typename
     }
   }
@@ -371,20 +171,22 @@ export const createUser = /* GraphQL */ `
   ) {
     createUser(input: $input, condition: $condition) {
       id
+      username
+      email
       name
       image
       bio
       gender
-      skills
+      skill
       language
-      sports
+      sport
       age
       location
-      partners {
+      connections {
         nextToken
         __typename
       }
-      messages {
+      chats {
         nextToken
         __typename
       }
@@ -401,17 +203,212 @@ export const updateUser = /* GraphQL */ `
   ) {
     updateUser(input: $input, condition: $condition) {
       id
+      username
+      email
       name
       image
       bio
       gender
-      skills
+      skill
       language
-      sports
+      sport
       age
       location
-      partners {
+      connections {
         nextToken
+        __typename
+      }
+      chats {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createConnection = /* GraphQL */ `
+  mutation CreateConnection(
+    $input: CreateConnectionInput!
+    $condition: ModelConnectionConditionInput
+  ) {
+    createConnection(input: $input, condition: $condition) {
+      id
+      status
+      userID
+      senderID
+      receiverID
+      chatID
+      lastMessageID
+      sender {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      receiver {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      lastMessage {
+        id
+        chatID
+        content
+        senderID
+        seen
+        createdAt
+        connectionID
+        updatedAt
+        __typename
+      }
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      connectionChatId
+      __typename
+    }
+  }
+`;
+export const updateConnection = /* GraphQL */ `
+  mutation UpdateConnection(
+    $input: UpdateConnectionInput!
+    $condition: ModelConnectionConditionInput
+  ) {
+    updateConnection(input: $input, condition: $condition) {
+      id
+      status
+      userID
+      senderID
+      receiverID
+      chatID
+      lastMessageID
+      sender {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      receiver {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      lastMessage {
+        id
+        chatID
+        content
+        senderID
+        seen
+        createdAt
+        connectionID
+        updatedAt
+        __typename
+      }
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      connectionChatId
+      __typename
+    }
+  }
+`;
+export const createChat = /* GraphQL */ `
+  mutation CreateChat(
+    $input: CreateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    createChat(input: $input, condition: $condition) {
+      id
+      connectionID
+      userIdD
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateChat = /* GraphQL */ `
+  mutation UpdateChat(
+    $input: UpdateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    updateChat(input: $input, condition: $condition) {
+      id
+      connectionID
+      userIdD
+      connection {
+        id
+        status
+        userID
+        senderID
+        receiverID
+        chatID
+        lastMessageID
+        createdAt
+        updatedAt
+        connectionChatId
         __typename
       }
       messages {
@@ -424,31 +421,45 @@ export const updateUser = /* GraphQL */ `
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
   ) {
-    deleteUser(input: $input, condition: $condition) {
+    createMessage(input: $input, condition: $condition) {
       id
-      name
-      image
-      bio
-      gender
-      skills
-      language
-      sports
-      age
-      location
-      partners {
-        nextToken
-        __typename
-      }
-      messages {
-        nextToken
-        __typename
-      }
+      chatID
+      content
+      senderID
+      seen
       createdAt
+      connectionID
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage(
+    $input: UpdateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    updateMessage(input: $input, condition: $condition) {
+      id
+      chatID
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
+      content
+      senderID
+      seen
+      createdAt
+      connectionID
       updatedAt
       __typename
     }

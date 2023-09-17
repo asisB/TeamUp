@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import 'react-native-gesture-handler';
-import { View, StyleSheet, SafeAreaView, Pressable } from 'react-native';
+import {View, StyleSheet, SafeAreaView, Pressable} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import ProfileScreen from '../../screens/ProfileScreen';
+import ProfileScreen from '../../screens/Profile/index';
 import HomeScreen from '../../screens/Home';
 import MatchesScreen from '../../screens/MachesScreen';
-import ChatRoomScreen from '../../screens/Chat/ChatRoomScreen';
+import ChatRoomScreen from '../../screens/Chat/ChatRoomScreen/index';
 import Chats from '../../screens/Chat/Chat';
 import Profile from '../../screens/Profile';
 
 const NavigationBar = () => {
-  const [activeScreen, setActiveScreen] = useState('HOME')
+  const [activeScreen, setActiveScreen] = useState('HOME');
 
   const color = '#b5b5b5';
   const activeColor = '#FCBF49';
@@ -24,24 +24,37 @@ const NavigationBar = () => {
           {activeScreen === 'HOME' && <HomeScreen />}
           {activeScreen === 'CHAT' && <Chats />}
           {activeScreen === 'PROFILE' && <Profile />}
-          {activeScreen === 'FAVORITE' && <MatchesScreen/>}
+          {activeScreen === 'FAVORITE' && <MatchesScreen />}
         </View>
-        
+
         <View style={styles.bottomNavigation}>
           <Pressable onPress={() => setActiveScreen('HOME')}>
-            <Fontisto 
-              name="home" 
-              size={30} 
-              color={activeScreen === 'HOME' ? activeColor : color} />
+            <Fontisto
+              name="home"
+              size={30}
+              color={activeScreen === 'HOME' ? activeColor : color}
+            />
           </Pressable>
           <Pressable onPress={() => setActiveScreen('FAVORITE')}>
-            <Fontisto name='favorite' size={30} color={activeScreen === 'FAVORITE' ? activeColor : color} />
+            <Fontisto
+              name="favorite"
+              size={30}
+              color={activeScreen === 'FAVORITE' ? activeColor : color}
+            />
           </Pressable>
           <Pressable onPress={() => setActiveScreen('CHAT')}>
-            <Ionicons name='chatbubble-sharp' size={30} color={activeScreen === 'CHAT' ? activeColor : color} />
+            <Ionicons
+              name="chatbubble-sharp"
+              size={30}
+              color={activeScreen === 'CHAT' ? activeColor : color}
+            />
           </Pressable>
           <Pressable onPress={() => setActiveScreen('PROFILE')}>
-            <FontAwesome name='user' size={30} color={activeScreen === 'PROFILE' ? activeColor : color} />
+            <FontAwesome
+              name="user"
+              size={30}
+              color={activeScreen === 'PROFILE' ? activeColor : color}
+            />
           </Pressable>
         </View>
       </View>
@@ -51,7 +64,7 @@ const NavigationBar = () => {
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
@@ -64,8 +77,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     padding: 10,
-    backgroundColor: 'white'
-  }
+    backgroundColor: 'white',
+  },
 });
 
 export default NavigationBar;

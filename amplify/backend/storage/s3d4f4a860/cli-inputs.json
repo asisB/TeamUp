@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3d4f4a860",
+  "policyUUID": "d4f4a860",
+  "bucketName": "teamup8f57ab4435aa46f6aae1e5ef40e282c2",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

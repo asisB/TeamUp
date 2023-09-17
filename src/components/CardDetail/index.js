@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image, ImageBackground, Pressable, Text, ScrollView, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -6,9 +6,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import CustomButton from '../CustomButton'
 import { useNavigation } from '@react-navigation/native';
-import MapView, {Marker} from 'react-native-maps'; 
+import MapView, { Marker } from 'react-native-maps';
+import { Auth } from 'aws-amplify';
+import APIService from '../../apiservices/apiService';
 
-const CardDetail = () => {
+const CardDetail = ({ route }) => {
+    const { user } = route.params;
     const [isSave, setAsSave] = useState(false);
 
     const navigation = useNavigation();
@@ -23,14 +26,35 @@ const CardDetail = () => {
     }
 
 
-  const onPressAsSAve = () => {
-    setAsSave(!isSave);
-  };
+    const onPressAsSAve = () => {
+        setAsSave(!isSave);
+    };
 
 
     const onSendRequest = () => {
         console.log('Send Request');
     }
+
+    const fetchData = async () => {
+        try {
+            const authUser = await Auth.currentAuthenticatedUser();
+            const userId = authUser.attributes.sub;
+
+            const allUsersRes = await APIService.getAllUser();
+
+            const connectedUserRes = await APIService.getConnectedUser(userId);
+
+            const connectedUserIDs = connectedUserRes.map((user) => user.receiverID);
+
+        } catch (error) {
+            console.log(`fetch-data:`, error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
 
     return (
         <ScrollView style={styles.root}>
@@ -41,27 +65,27 @@ const CardDetail = () => {
                 }}
             >
                 <View style={styles.iconContainer}>
-                    <Pressable onPress={goBackPress}  style={styles.iconLeft}>
+                    <Pressable onPress={goBackPress} style={styles.iconLeft}>
                         <Ionicons name="chevron-back" size={30} color="white" />
                     </Pressable>
                     <Pressable style={styles.iconRight} onPress={onPressAsSAve}>
-                        <Fontisto name="favorite" size={30} color={isSave ? '#FCBF49' : 'white'}/>
+                        <Fontisto name="favorite" size={30} color={isSave ? '#FCBF49' : 'white'} />
                     </Pressable>
                 </View>
             </ImageBackground>
             <View style={styles.titleConatiner}>
-                <Text style={styles.title}>Bikal Singh Thapa</Text>
+                <Text style={styles.title}>{user.name}</Text>
                 <Pressable onPress={onPress}>
                     <Text style={styles.text}>Message</Text>
                 </Pressable>
             </View >
 
             <View style={styles.experinceConatiner} >
-                <Text style={styles.text}>Expert</Text>
+                <Text style={styles.text}>{user.skill}</Text>
                 <View style={styles.line}></View>
-                <Text style={styles.text}>Uxbridge</Text>
+                <Text style={styles.text}>{user.location}</Text>
             </View>
-            <Text style={styles.texts}>Basketball</Text>
+            <Text style={styles.texts}>{user.sport}</Text>
 
             <View style={styles.lineContainer}></View>
 
@@ -74,21 +98,20 @@ const CardDetail = () => {
                         </View>
                         <View style={styles.containerX}>
                             <Text style={styles.title}>Skills</Text>
-                            <Text>Intermediate</Text>
+                            <Text>{user.skill}</Text>
                         </View>
                     </View>
-                    <View style={styles.experinceConatiner}>
-                        <View style={styles.containerY}>
-                            <View style={styles.icons}>
-                                <MaterialIcons name="sports-basketball" size={18} color="white" />
-                            </View>
-                            <View style={styles.containerX}>
-                                <Text style={styles.title}>Sports</Text>
-                                <Text>Basketball</Text>
-                            </View>
+                    <View style={styles.containerY}>
+                        <View style={styles.icons}>
+                            <MaterialIcons name="sports-basketball" size={18} color="white" />
+                        </View>
+                        <View style={styles.containerX}>
+                            <Text style={styles.title}>Sports</Text>
+                            <Text>{user.sport}</Text>
                         </View>
                     </View>
                 </View>
+
 
                 <View style={styles.aboutConatinerX}>
                     <View style={styles.containerY}>
@@ -101,13 +124,13 @@ const CardDetail = () => {
                         </View>
                     </View>
                     <View style={styles.experinceConatiner}>
-                        <View style={styles.containerY}>
+                        <View style={styles.containerYX}>
                             <View style={styles.icons}>
                                 <MaterialIcons name="calendar-today" size={18} color="white" />
                             </View>
                             <View style={styles.containerX}>
                                 <Text style={styles.title}>Age</Text>
-                                <Text>20</Text>
+                                <Text>{user.age}</Text>
                             </View>
                         </View>
                     </View>
@@ -120,7 +143,7 @@ const CardDetail = () => {
                         </View>
                         <View style={styles.containerX}>
                             <Text style={styles.title}>Language</Text>
-                            <Text>English</Text>
+                            <Text>{user.language}</Text>
                         </View>
                     </View>
                 </View>
@@ -131,29 +154,29 @@ const CardDetail = () => {
 
             <View style={styles.containerX}>
                 <Text style={styles.title}>Bio</Text>
-                <Text style={styles.text}>Hi, I'm Bikal Singh Thapa, a passionate basketball player with a love for the game that runs deep. Born and raised in the basketball-crazed city of Chicago, I have been honing my skills on the court since a young age. With a towering height of 6'7" and a wingspan that seems to stretch forever, I thrive in the power forward position.</Text>
+                <Text style={styles.text}>{user.bio}</Text>
             </View>
 
             <View style={styles.lineContainer}></View>
 
             <View style={styles.containerX}>
                 <Text style={styles.title}>Map View</Text>
-                <MapView style={styles.mapStyle} 
+                <MapView style={styles.mapStyle}
                     initialRegion={{
                         latitude: 37.78825,
                         longitude: -122.4324,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
-                      }}
+                    }}
                 />
-                <Marker 
-                draggable
-                coordinate={{
-                    latitude: 51.5485, 
-                    longitude:  -0.479611,
-                }}
-                title={'Location'}
-                  />
+                <Marker
+                    draggable
+                    coordinate={{
+                        latitude: 51.5485,
+                        longitude: -0.479611,
+                    }}
+                    title={'Location'}
+                />
             </View>
             <View style={{ padding: 16 }}>
                 <CustomButton
@@ -190,11 +213,20 @@ const styles = StyleSheet.create({
 
     containerX: {
         flexDirection: 'column',
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
+        justifyContent: 'flex-end',
     },
     containerY: {
         flexDirection: 'row',
         marginVertical: 8
+    },
+
+    containerYX: {
+        flexDirection: 'row',
+        alignItems: 'center', 
+        marginVertical: 8,
+        marginRight: 32,
+        maxWidth: '100%',
     },
 
     iconRight: {
@@ -256,7 +288,7 @@ const styles = StyleSheet.create({
 
     },
     mapStyle: {
-        height: 200, 
+        height: 200,
         width: '100%'
     }
 });

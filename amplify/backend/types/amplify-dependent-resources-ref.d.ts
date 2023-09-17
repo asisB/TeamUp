@@ -1,22 +1,26 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "TeamUp": {
+    "teamup": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string",
       "GraphQLAPIKeyOutput": "string"
     }
   },
   "auth": {
-    "TeamUp": {
+    "teamupd00d1cb5": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
-      "HostedUIDomain": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
-      "OAuthMetadata": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
+    }
+  },
+  "storage": {
+    "s3d4f4a860": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }

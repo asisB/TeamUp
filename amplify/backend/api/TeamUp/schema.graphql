@@ -1,29 +1,59 @@
-enum Status {
-  REQUESTED
-  ACCEPTED
+type User
+  @model
+  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
+  id: ID!
+  username: String
+  email: String
+  name: String
+  image: String
+  bio: String
+  gender: Gender
+  skill: String
+  language: String
+  sport: Sport
+  age: String
+  location: String
+  connections: [Connection] @hasMany(indexName: "byUser", fields: ["id"])
+  chats: [Chat] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-type Message @model {
-  id: ID
-  createdAt: AWSDateTime
-  content: String
-  senderID: ID!
-  receiverID: ID! @index(name: "byReceiver")
+type Connection
+  @model
+  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
+  id: ID!
+  status: ConnectionStatus!
+  userID: ID! @index(name: "byUser")
+  senderID: ID! @index(name: "bySenderID")
+  receiverID: ID! @index(name: "byReceiverID")
+  chatID: ID
+  lastMessageID: ID
   sender: User @belongsTo(fields: ["senderID"])
   receiver: User @belongsTo(fields: ["receiverID"])
+  lastMessage: Message @hasOne(fields: ["lastMessageID"])
+  chat: Chat @hasOne
 }
 
-type Partner @model @auth(rules: [{allow: public}]) {
+type Chat
+  @model
+  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
   id: ID!
-  status: Status
-  userID: ID @index(name: "byUserID")
-  user: User @belongsTo(fields: ["userID"])
+  connectionID: ID!
+  userIdD: ID @index(name: "byUser")
+  connection: Connection @belongsTo(fields: ["connectionID"])
+  messages: [Message] @hasMany(indexName: "byChat", fields: ["id"])
 }
 
-type Teamup @model @auth(rules: [{allow: public}]) {
+type Message
+  @model
+  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
   id: ID!
-  User: User @hasOne
-  User1: User @hasOne
+  chatID: ID! @index(name: "byChat")
+  chat: Chat @belongsTo(fields: ["chatID"])
+  content: String
+  senderID: ID!
+  seen: Boolean
+  createdAt: AWSDateTime
+  connectionID: ID! @index(name: "byConnection")
 }
 
 enum Gender {
@@ -32,7 +62,7 @@ enum Gender {
   OTHER
 }
 
-enum Sports {
+enum Sport {
   BASKETBALL
   VOLLEYBALL
   FOOTBALL
@@ -44,17 +74,8 @@ enum Sports {
   BADMINTON
 }
 
-type User @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String!
-  image: String
-  bio: String!
-  gender: Gender
-  skills: String!
-  language: String
-  sports: Sports!
-  age: String
-  location: String!
-  partners: [Partner] @hasMany(indexName: "byUserID", fields: ["id"])
-  messages: [Message] @hasMany(indexName: "byReceiver", fields: ["id"])
+enum ConnectionStatus {
+  REQUESTED
+  ACCEPTED
+  DECLINED
 }
