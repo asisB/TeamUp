@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,22 @@ import {
   Pressable,
   Dimensions,
   SafeAreaView,
+  TouchableOpacity,
+  Alert
 } from 'react-native';
-import Settings from '../../components/Setting';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ImagePicker from 'react-native-image-crop-picker';
 
-import {useNavigation} from '@react-navigation/native';
-import {Auth, DataStore} from 'aws-amplify';
+import { useNavigation } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 import APIService from '../../apiservices/apiService';
+
 
 const Profile = () => {
   const [isLoading, setLoading] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const navigation = useNavigation('');
 
@@ -45,6 +49,53 @@ const Profile = () => {
     navigation.navigate('Terms');
   };
 
+
+  const save = async (imageUrl) => {
+    try {
+      const updatedUser = {
+        id: user.id,
+        image: imageUrl,
+      };
+      const updateUserRes = await APIService.updateUser(updatedUser);
+      Alert.alert('Profile update successfully');
+    } catch (error) {
+      Alert.alert('Error on update profile');
+    }
+  };
+
+  const openImagePicker = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      upload(image);
+    });
+  }
+
+  const upload = async (image) => {
+    try {
+      const mimeType = 'image/jpeg';
+      const imageUrl = await APIService.uploadImage(user.id, image, mimeType);
+      console.log(imageUrl);
+      if (imageUrl) {
+        console.log('Image uploaded to AWS S3:', imageUrl);
+        Alert.alert('Uploaded Successfully');
+        save(imageUrl);
+        setSelectedImage(imageUrl);
+
+      } else {
+        console.error('Error uploading image to AWS S3.');
+        Alert.alert(
+          'Error uploading image',
+          'There was an error uploading the image to AWS S3. Please try again later.'
+        );
+      }
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  }
   const getCurrentUser = async () => {
     try {
       const authUser = await Auth.currentAuthenticatedUser();
@@ -67,15 +118,31 @@ const Profile = () => {
       <Text style={styles.title}>Profile</Text>
       <View style={styles.profileContainer}>
         <View style={styles.profileInnerContainer}>
-          <Image
-            source={{
-              uri: user?.image || '',
-            }}
-            style={styles.image}
-          />
+          <View style={styles.imageContainer}>
+            <Image
+              source={{
+                uri: selectedImage, //user?.image || ''
+              }}
+              style={styles.image}
+            />
+
+            <TouchableOpacity
+              style={styles.editIcon}
+              onPress={() => {
+                try {
+                  openImagePicker();
+                } catch (error) {
+                  console.log('Error', error);
+                }
+              }}
+            >
+              <MaterialIcons name="edit" size={16} color="white" />
+            </TouchableOpacity>
+
+          </View>
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>{user.name}</Text>
-            <Text style={styles.subtitle}>{user.sport}</Text>
+            <Text style={styles.name}>{user?.name}</Text>
+            <Text style={styles.subtitle}>{user?.sport}</Text>
           </View>
         </View>
         <Pressable onPress={onPress} style={styles.editButton}>
@@ -89,7 +156,7 @@ const Profile = () => {
           <View style={styles.iconContainer}>
             <FontAwesome name="user" size={16} color="#808080" />
           </View>
-          <Text style={{marginLeft: 8}}>Personal Information</Text>
+          <Text style={{ marginLeft: 8 }}>Personal Information</Text>
         </View>
         <MaterialIcons name="arrow-forward-ios" size={16} color="#808080" />
       </Pressable>
@@ -99,7 +166,7 @@ const Profile = () => {
           <View style={styles.iconContainer}>
             <FontAwesome name="user" size={16} color="#808080" />
           </View>
-          <Text style={{marginLeft: 8}}>Notification</Text>
+          <Text style={{ marginLeft: 8 }}>Notification</Text>
         </View>
         <MaterialIcons name="arrow-forward-ios" size={16} color="#808080" />
       </Pressable>
@@ -110,7 +177,7 @@ const Profile = () => {
           <View style={styles.iconContainer}>
             <FontAwesome name="user" size={16} color="#808080" />
           </View>
-          <Text style={{marginLeft: 8}}>Help Center</Text>
+          <Text style={{ marginLeft: 8 }}>Help Center</Text>
         </View>
         <MaterialIcons name="arrow-forward-ios" size={16} color="#808080" />
       </Pressable>
@@ -120,19 +187,19 @@ const Profile = () => {
           <View style={styles.iconContainer}>
             <FontAwesome name="user" size={16} color="#808080" />
           </View>
-          <Text style={{marginLeft: 8}}>Terms Of Services</Text>
+          <Text style={{ marginLeft: 8 }}>Terms Of Services</Text>
         </View>
         <MaterialIcons name="arrow-forward-ios" size={16} color="#808080" />
       </Pressable>
 
-      <Pressable onPress={() => Auth.signOut()} style={{marginTop: 8}}>
+      <Pressable onPress={() => Auth.signOut()} style={{ marginTop: 8 }}>
         <Text style={styles.buttonText}>Sign Out</Text>
       </Pressable>
     </SafeAreaView>
   );
 };
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const imageWidth = width * 0.2; // 20% of the screen width
 
 const styles = StyleSheet.create({
@@ -185,14 +252,27 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   iconContainer: {
-    width: 30,
-    height: 30,
+    width: 8,
+    height: 8,
     borderRadius: 15,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#D9D9D9',
   },
+  editIcon: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 16,
+    padding: 2,
+    transform: [{ translateX: 16 }, { translateY: 16 }],
+  },
+  imageContainer: {
+    position: 'relative',
+  }
+
 });
 
 export default Profile;

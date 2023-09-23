@@ -15,6 +15,7 @@ type User
   location: String
   connections: [Connection] @hasMany(indexName: "byUser", fields: ["id"])
   chats: [Chat] @hasMany(indexName: "byUser", fields: ["id"])
+  bookmarks: [Bookmark] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 type Connection
@@ -78,4 +79,13 @@ enum ConnectionStatus {
   REQUESTED
   ACCEPTED
   DECLINED
+}
+
+type Bookmark
+  @model
+  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  markedUserID: ID!
+  markedUser: User @belongsTo(fields: ["markedUserID"])
 }

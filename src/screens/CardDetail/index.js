@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Image, ImageBackground, Pressable, Text, ScrollView, Alert } from 'react-native';
+import { Geolocation } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import CustomButton from '../CustomButton'
+import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
 import { Auth } from 'aws-amplify';
 import APIService from '../../apiservices/apiService';
+import { v4 as uuidv4 } from 'uuid';
 
-const CardDetail = ({ route }) => {
+const CardDetail = ({ route, addToFavorite }) => {
     const { user } = route.params;
     const [isSave, setAsSave] = useState(false);
+    const [isAddedToBookmarks, setIsAddedToBookmarks] = useState(false);
+    const [currentLocation, setCurrentLocation] = useState(null);
+
+    const [region, setRegion] = useState({
+        latitude: 51.5074,
+        longitude: -0.1278,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+    });
 
     const navigation = useNavigation();
 
@@ -25,14 +36,40 @@ const CardDetail = ({ route }) => {
         navigation.goBack();
     }
 
+    const onPressBookmarks = async (userId) => {
+        try {
+            if (isAddedToBookmarks) {
+                await APIService.createBookmarkUsers(userId, user.id);
+            } else {
+                await APIService.getBookmarkUsers(userId, user.id);
+            }
 
-    const onPressAsSAve = () => {
-        setAsSave(!isSave);
+            setIsAddedToBookmarks(!isAddedToBookmarks);
+
+            const updatedBookmarkUsers = await APIService.getBookmarkUsers(userId);
+            setIsAddedToBookmarks(updatedBookmarkUsers);
+
+        } catch (error) {
+            console.log('Error adding to bookmarks:', error);
+        }
     };
 
 
     const onSendRequest = () => {
         console.log('Send Request');
+    }
+
+    const save = async (userId, markedUserId) => {
+        try {
+            const input = {
+                id: uuidv4(),
+                markedUserID: markedUserId,
+                userID: userId,
+            }
+
+        } catch (error) {
+            console.log("error", error);
+        }
     }
 
     const fetchData = async () => {
@@ -41,8 +78,8 @@ const CardDetail = ({ route }) => {
             const userId = authUser.attributes.sub;
 
             const allUsersRes = await APIService.getAllUser();
-
             const connectedUserRes = await APIService.getConnectedUser(userId);
+            const markedUserId = await APIService.getBookmarkUsers(userId);
 
             const connectedUserIDs = connectedUserRes.map((user) => user.receiverID);
 
@@ -53,22 +90,22 @@ const CardDetail = ({ route }) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
 
+    }, []);
 
     return (
         <ScrollView style={styles.root}>
             <ImageBackground
                 style={styles.imageContainer}
                 source={{
-                    uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/jeff.jpeg',
+                    uri: user?.image || "",
                 }}
             >
                 <View style={styles.iconContainer}>
                     <Pressable onPress={goBackPress} style={styles.iconLeft}>
                         <Ionicons name="chevron-back" size={30} color="white" />
                     </Pressable>
-                    <Pressable style={styles.iconRight} onPress={onPressAsSAve}>
+                    <Pressable style={styles.iconRight} onPress={i = onPressBookmarks}>
                         <Fontisto name="favorite" size={30} color={isSave ? '#FCBF49' : 'white'} />
                     </Pressable>
                 </View>
@@ -86,7 +123,6 @@ const CardDetail = ({ route }) => {
                 <Text style={styles.text}>{user.location}</Text>
             </View>
             <Text style={styles.texts}>{user.sport}</Text>
-
             <View style={styles.lineContainer}></View>
 
             <View style={styles.containerX}>
@@ -161,22 +197,20 @@ const CardDetail = ({ route }) => {
 
             <View style={styles.containerX}>
                 <Text style={styles.title}>Map View</Text>
-                <MapView style={styles.mapStyle}
-                    initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
-                />
-                <Marker
-                    draggable
-                    coordinate={{
-                        latitude: 51.5485,
-                        longitude: -0.479611,
-                    }}
-                    title={'Location'}
-                />
+                <MapView
+                    initialRegion={region}
+                    style={styles.mapStyle}
+                    onRegionChangeComplete={(region) => setRegion(region)}
+                >
+                    <Text style={styles.text}>Current latitude: {region.latitude}</Text>
+                    <Text style={styles.text}>Current longitude: {region.longitude}</Text>
+
+                    <Marker
+                        coordinate={region}
+                        title={"My Location"}
+                    />
+                </MapView>
+
             </View>
             <View style={{ padding: 16 }}>
                 <CustomButton
@@ -223,7 +257,7 @@ const styles = StyleSheet.create({
 
     containerYX: {
         flexDirection: 'row',
-        alignItems: 'center', 
+        alignItems: 'center',
         marginVertical: 8,
         marginRight: 32,
         maxWidth: '100%',

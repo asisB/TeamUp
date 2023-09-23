@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 16,
-    color: 'lightblue',
+    color: 'black',
   },
   container: {
     flexDirection: 'row',

@@ -27,6 +27,10 @@ export const deleteUser = /* GraphQL */ `
         nextToken
         __typename
       }
+      bookmarks {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -164,6 +168,38 @@ export const deleteMessage = /* GraphQL */ `
     }
   }
 `;
+export const deleteBookmark = /* GraphQL */ `
+  mutation DeleteBookmark(
+    $input: DeleteBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    deleteBookmark(input: $input, condition: $condition) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -187,6 +223,10 @@ export const createUser = /* GraphQL */ `
         __typename
       }
       chats {
+        nextToken
+        __typename
+      }
+      bookmarks {
         nextToken
         __typename
       }
@@ -219,6 +259,10 @@ export const updateUser = /* GraphQL */ `
         __typename
       }
       chats {
+        nextToken
+        __typename
+      }
+      bookmarks {
         nextToken
         __typename
       }
@@ -383,6 +427,23 @@ export const createChat = /* GraphQL */ `
       id
       connectionID
       userIdD
+      connection {
+        id
+        status
+        userID
+        senderID
+        receiverID
+        chatID
+        lastMessageID
+        createdAt
+        updatedAt
+        connectionChatId
+        __typename
+      }
+      messages {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -429,6 +490,14 @@ export const createMessage = /* GraphQL */ `
     createMessage(input: $input, condition: $condition) {
       id
       chatID
+      chat {
+        id
+        connectionID
+        userIdD
+        createdAt
+        updatedAt
+        __typename
+      }
       content
       senderID
       seen
@@ -460,6 +529,70 @@ export const updateMessage = /* GraphQL */ `
       seen
       createdAt
       connectionID
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createBookmark = /* GraphQL */ `
+  mutation CreateBookmark(
+    $input: CreateBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    createBookmark(input: $input, condition: $condition) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateBookmark = /* GraphQL */ `
+  mutation UpdateBookmark(
+    $input: UpdateBookmarkInput!
+    $condition: ModelBookmarkConditionInput
+  ) {
+    updateBookmark(input: $input, condition: $condition) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
       updatedAt
       __typename
     }

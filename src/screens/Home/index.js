@@ -16,31 +16,21 @@ import APIService from '../../apiservices/apiService';
 import { Auth } from 'aws-amplify';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import uuid from 'react-native-uuid';
+
+
 const HomeScreen = () => {
   const [userId, setUserId] = useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [matchupTeam, setMatchTeam] = useState([]);
   const navigation = useNavigation();
-  const [filteredUsers, setFilteredUsers] = useState([]);
-
 
   const handleSearch = query => {
     setSearchQuery(query);
-    filteredUsers(query);
   };
 
   const navigateToCardDetail = (user) => {
     navigation.navigate('CardDetail', { user });
   };
-
-  const filterUsers = (query) => {
-    const filtered = matchupTeam.filter((user) =>
-      user.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    setFilteredUsers(filtered);
-  };
-
 
   const fetchData = async () => {
     try {
@@ -59,6 +49,7 @@ const HomeScreen = () => {
         .filter(user => connectedUserIDs.includes(user.id) === false);
 
       setMatchTeam(filteredUsers);
+
     } catch (error) {
       console.log(`fetch-data:`, error);
     }
@@ -127,13 +118,6 @@ const HomeScreen = () => {
         contentContainerStyle={styles.cardList}
         showsVerticalScrollIndicator={false}
       />
-
-      {/* <AnimatedStack
-        data={users}
-        renderItem={({ item }) => <Card user={item} />}
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
-      /> */}
     </SafeAreaView>
   );
 };

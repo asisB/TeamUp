@@ -24,6 +24,10 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
         __typename
       }
+      bookmarks {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -53,6 +57,10 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
         __typename
       }
+      bookmarks {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -79,6 +87,10 @@ export const onDeleteUser = /* GraphQL */ `
         __typename
       }
       chats {
+        nextToken
+        __typename
+      }
+      bookmarks {
         nextToken
         __typename
       }
@@ -455,6 +467,93 @@ export const onDeleteMessage = /* GraphQL */ `
       seen
       createdAt
       connectionID
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateBookmark = /* GraphQL */ `
+  subscription OnCreateBookmark($filter: ModelSubscriptionBookmarkFilterInput) {
+    onCreateBookmark(filter: $filter) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateBookmark = /* GraphQL */ `
+  subscription OnUpdateBookmark($filter: ModelSubscriptionBookmarkFilterInput) {
+    onUpdateBookmark(filter: $filter) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteBookmark = /* GraphQL */ `
+  subscription OnDeleteBookmark($filter: ModelSubscriptionBookmarkFilterInput) {
+    onDeleteBookmark(filter: $filter) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
       updatedAt
       __typename
     }

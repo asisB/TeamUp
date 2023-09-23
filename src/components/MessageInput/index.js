@@ -29,6 +29,7 @@ const MessageInput = ({
 
   const sendMessage = () => {
     console.log('sending: ', message);
+    
     setMessage('');
   };
 

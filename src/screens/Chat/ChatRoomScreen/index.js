@@ -7,18 +7,18 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Message from '../../../components/Message';
 import chatRoomData from '../../../../assets/data/Chats';
 import MessageInput from '../../../components/MessageInput';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useRoute, useNavigation} from '@react-navigation/core';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRoute, useNavigation } from '@react-navigation/core';
 import APIService from '../../../apiservices/apiService';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {TextInput} from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 const ChatRoomScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
@@ -57,7 +57,7 @@ const ChatRoomScreen = () => {
     lastMessage,
   } = route.params.chat;
 
-  navigation.setOptions({title: name});
+  navigation.setOptions({ title: name });
 
   console.log(`name`, name);
 
@@ -87,7 +87,7 @@ const ChatRoomScreen = () => {
           styles.container,
           isMe ? styles.rightConatiner : styles.leftContainerMe,
         ]}>
-        <Text style={{color: isMe ? 'black' : 'white'}}>{item.content}</Text>
+        <Text style={{ color: isMe ? 'black' : 'white' }}>{item.content}</Text>
       </View>
     );
   };
@@ -117,6 +117,7 @@ const ChatRoomScreen = () => {
       console.log(error);
       Alert.alert('Write a message!');
     }
+    setMessage('');
   };
 
   const renderMessageInput = () => {
@@ -125,37 +126,38 @@ const ChatRoomScreen = () => {
         style={styles.root}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={100}>
-        <View style={styles.inputContainer}>
-          <FontAwesome
-            name="smile-o"
-            size={24}
-            color="#808080"
-            style={styles.icon}
-          />
-          <TextInput
-            style={styles.input}
-            value={message}
-            onChangeText={setMessage}
-            placeholder="Send a message...."
-          />
-          <FontAwesome
-            name="camera"
-            size={24}
-            color="gray"
-            style={styles.icon}
-          />
-          <FontAwesome
-            name="microphone"
-            size={24}
-            color="gray"
-            style={styles.icon}
-          />
-        </View>
-        <TouchableOpacity
-          onPress={onSendMessage}
-          style={styles.buttonContainer}>
-          <Feather name="send" size={20} color="white" style={styles.icon} />
-        </TouchableOpacity>
+          <View style={styles.inputContainer}>
+            <FontAwesome
+              name="smile-o"
+              size={24}
+              color="#808080"
+              style={styles.icon}
+            />
+            <TextInput
+              style={styles.input}
+              value={message}
+              onChangeText={setMessage}
+              placeholder="Send a message...."
+            />
+            <FontAwesome
+              name="camera"
+              size={24}
+              color="gray"
+              style={styles.icon}
+            />
+
+            <FontAwesome
+              name="microphone"
+              size={24}
+              color="gray"
+              style={styles.icon}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={onSendMessage}
+            style={styles.buttonContainer}>
+            <Feather name="send" size={20} color="white" style={styles.icon} />
+          </TouchableOpacity>
       </KeyboardAvoidingView>
     );
   };
@@ -164,7 +166,7 @@ const ChatRoomScreen = () => {
     <SafeAreaView style={styles.page}>
       <FlatList
         data={messages}
-        renderItem={({item}) => renderMessage(item)}
+        renderItem={({ item }) => renderMessage(item)}
         inverted
       />
       {renderMessageInput()}
@@ -176,6 +178,7 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: 'white',
     flex: 1,
+    padding: 8
   },
   container: {
     backgroundColor: 'blue',
@@ -196,7 +199,7 @@ const styles = StyleSheet.create({
   },
   root: {
     flexDirection: 'row',
-    padding: 10,
+    padding: 16,
   },
   buttonContainer: {
     width: 40,

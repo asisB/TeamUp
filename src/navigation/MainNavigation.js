@@ -9,7 +9,7 @@ import ChatRoomScreen from '../screens/Chat/ChatRoomScreen';
 import EditProfileScreen from '../screens/EditProfile';
 import HelpScreen from '../screens/SupportScreen/HelpScreen';
 import TermsScreen from '../screens/SupportScreen/TermsScreen';
-import CardDetail from '../components/CardDetail';
+import CardDetail from '../screens/CardDetail';
 import RequestScreen from '../screens/Request';
 
 const Stack = createNativeStackNavigator();
@@ -31,10 +31,6 @@ const MainNavigation = () => {
         <Stack.Screen
           name="ChatRoom"
           component={ChatRoomScreen}
-          options={{
-            headerTitle: 'Message',
-            headerBackTitleVisible: false,
-          }}
         />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen
@@ -60,7 +56,7 @@ const MainNavigation = () => {
         <Stack.Screen
           name="RequestScreen"
           component={RequestScreen}
-          options={{headerShown: false}}
+         // options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -70,7 +66,7 @@ const MainNavigation = () => {
 const Header = props => {
   return (
     <View style={{alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 20, color: '#D62828', fontWeight: 'bold'}}>
+      <Text style={{fontSize: 24, color: '#D62828', fontWeight: 'bold'}}>
         TeamUp
       </Text>
     </View>

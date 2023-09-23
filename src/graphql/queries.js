@@ -24,6 +24,10 @@ export const getUser = /* GraphQL */ `
         nextToken
         __typename
       }
+      bookmarks {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -430,6 +434,94 @@ export const messagesByConnectionID = /* GraphQL */ `
         seen
         createdAt
         connectionID
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getBookmark = /* GraphQL */ `
+  query GetBookmark($id: ID!) {
+    getBookmark(id: $id) {
+      id
+      userID
+      markedUserID
+      markedUser {
+        id
+        username
+        email
+        name
+        image
+        bio
+        gender
+        skill
+        language
+        sport
+        age
+        location
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listBookmarks = /* GraphQL */ `
+  query ListBookmarks(
+    $filter: ModelBookmarkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBookmarks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        markedUserID
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const bookmarksByUserID = /* GraphQL */ `
+  query BookmarksByUserID(
+    $userID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelBookmarkFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    bookmarksByUserID(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        markedUser {
+          id
+          name
+          image
+          bio
+          skill
+          sport
+          location
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
         updatedAt
         __typename
       }

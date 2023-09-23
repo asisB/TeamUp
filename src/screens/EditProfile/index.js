@@ -42,7 +42,7 @@ const EditScreen = () => {
         email: email,
         name: name,
         image:
-          'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim1.JPG',
+        'https://i.pinimg.com/originals/59/17/90/591790aaefd7b04bc708520cb13031be.png',
         bio: bio,
         gender: gender,
         skill: skillLevel,
