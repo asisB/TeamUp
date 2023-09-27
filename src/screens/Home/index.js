@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,26 +10,38 @@ import {
 } from 'react-native';
 import Card from '../../components/Card';
 import users from '../../../assets/data/user';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import AnimatedStack from '../../components/AnimatedStack';
 import APIService from '../../apiservices/apiService';
-import { Auth } from 'aws-amplify';
+import {Auth} from 'aws-amplify';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import uuid from 'react-native-uuid';
-
 
 const HomeScreen = () => {
   const [userId, setUserId] = useState();
   const [searchQuery, setSearchQuery] = useState('');
   const [matchupTeam, setMatchTeam] = useState([]);
+  const [searchedMatchupTeam, setSearchedMatchTeam] = useState([]);
   const navigation = useNavigation();
 
   const handleSearch = query => {
     setSearchQuery(query);
+    if (query !== '') {
+      const searchResult = matchupTeam
+        .filter(item => item.sport !== null || item.sport !== undefined)
+        .filter(item => {
+          if (item?.sport?.toLowerCase().includes(query)) {
+            return item;
+          }
+        });
+      setSearchedMatchTeam(searchResult);
+    } else {
+      setSearchedMatchTeam(matchupTeam);
+    }
   };
 
-  const navigateToCardDetail = (user) => {
-    navigation.navigate('CardDetail', { user });
+  const navigateToCardDetail = user => {
+    navigation.navigate('CardDetail', {user});
   };
 
   const fetchData = async () => {
@@ -49,7 +61,7 @@ const HomeScreen = () => {
         .filter(user => connectedUserIDs.includes(user.id) === false);
 
       setMatchTeam(filteredUsers);
-
+      setSearchedMatchTeam(filteredUsers);
     } catch (error) {
       console.log(`fetch-data:`, error);
     }
@@ -101,8 +113,8 @@ const HomeScreen = () => {
         />
       </View>
       <FlatList
-        data={matchupTeam}
-        renderItem={({ item }) => (
+        data={searchedMatchupTeam}
+        renderItem={({item}) => (
           <TouchableOpacity onPress={() => navigateToCardDetail(item)}>
             <View style={styles.cardContainer}>
               <Card user={item} />

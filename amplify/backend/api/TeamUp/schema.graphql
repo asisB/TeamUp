@@ -83,7 +83,7 @@ enum ConnectionStatus {
 
 type Bookmark
   @model
-  @auth(rules: [{allow: private, operations: [create, read, update]}]) {
+  @auth(rules: [{allow: private, operations: [create, read, update, delete]}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   markedUserID: ID!
