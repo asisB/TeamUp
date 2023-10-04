@@ -16,7 +16,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import APIService from '../../apiservices/apiService';
 import uuid from 'react-native-uuid';
 

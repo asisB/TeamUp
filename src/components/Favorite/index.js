@@ -32,12 +32,14 @@ const Favorite = (props) => {
                     source={{
                         uri: image,
                     }}
-                    style={styles.image} />
+                    style={styles.image}
+                    testID="user-image" />
                 )}
             </View>
         </SafeAreaView>
     )
 }
+
 
 
 const deviceWidth = Math.round(Dimensions.get('window').width);

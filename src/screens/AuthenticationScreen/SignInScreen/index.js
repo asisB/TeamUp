@@ -72,7 +72,7 @@ const SignInScreen = () => {
   };
 
   const onSignUpPressed = () => {
-    console.warn('signUp');
+    console.warn('SignUp Pressed');
     navigation.navigate('SignUp');
   };
 

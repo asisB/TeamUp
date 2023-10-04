@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import APIService from '../../apiservices/apiService';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import Favorite from '../../components/Favorite';
 import {useNavigation} from '@react-navigation/native';
 
