@@ -47,7 +47,7 @@ If everything is set up _correctly_, you should see your new app running in your
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
 ## Get Access To Amplify Data 
-amplify pull --appId d3mwunpa3xc3o3 --envName dev
+`amplify pull --appId d3mwunpa3xc3o3 --envName dev`
 
 This will help to get access to backend of the application
 
